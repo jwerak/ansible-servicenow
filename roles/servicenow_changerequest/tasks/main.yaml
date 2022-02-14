@@ -2,7 +2,7 @@
 - name: Create a change request
   servicenow.itsm.change_request:
     instance:
-      host: https://"{{ snow_credentials.instance | default(snow_instance, true)}}".service-now.com
+      host: "https://{{ snow_credentials.instance | default(snow_instance, true) }}.service-now.com"
       username: "{{ snow_credentials.username | default(snow_username, true)}}"
       password: "{{ snow_credentials.password | default(snow_password, true)}}"
 
