@@ -1,27 +1,16 @@
 ---
-- name: Pip install pysnow
-  pip:
-    name: pysnow
-    extra_args: --user
-
 - name: Create a change request
-  snow_record:
+  servicenow.itsm.change_request:
+    instance:
+      host: https://"{{ snow_credentials.instance | default(snow_instance, true)}}".service-now.com
+      username: "{{ snow_credentials.username | default(snow_username, true)}}"
+      password: "{{ snow_credentials.password | default(snow_password, true)}}"
+
     state: present
-    table: change_request
-    username: "{{ snow_credentials.username | default(snow_username, true)}}"
-    password: "{{ snow_credentials.password | default(snow_password, true)}}"
-    instance: "{{ snow_credentials.instance | default(snow_instance, true)}}"
-    data:
-      severity: "{{ change_request.severity }}"
-      priority: "{{ change_request.priority }}"
-      short_description: "GitOps Change: Update for {{ app_name }} on {{ target_clusters }}"
-      implementation_plan: "{{ change_request.implementation_plan }}"
-      justification: "{{ change_request.justification }}"
-      description: "{{ change_request.description }}"
-      risk_impact_analysis: "{{ change_request.risk_impact_analysis }}"
-      test_plan: "{{ change_request.test_plan }}"
-      start_date: "{{ ansible_date_time.iso8601 }}"
+    assignment_group: some.group
+    description: "GitOps Change: Update for {{ app_name }} on {{ target_clusters }}"
   register: new_incident
+
 
 - debug:
     var: new_incident.record
