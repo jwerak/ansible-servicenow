@@ -6,7 +6,7 @@
       username: "{{ snow_credentials.username | default(snow_username, true)}}"
       password: "{{ snow_credentials.password | default(snow_password, true)}}"
 
-    state: present
+    state: new
     assignment_group: some.group
     description: "GitOps Change: Update for {{ app_name }} on {{ target_clusters }}"
   register: new_incident
