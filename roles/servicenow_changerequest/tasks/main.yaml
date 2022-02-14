@@ -7,7 +7,6 @@
       password: "{{ snow_credentials.password | default(snow_password, true)}}"
 
     state: new
-    assignment_group: some.group
     description: "GitOps Change: Update for {{ app_name }} on {{ target_clusters }}"
   register: new_incident
 
